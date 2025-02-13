@@ -8,6 +8,8 @@ import { changeSelectedGame } from '../../redux-state/redusers/data';
 
 import ButtonBack from '../comps/ButtonBack';
 import PhotoCarousel from '../comps/Carousel';
+import Loader from '../views/local/Loader';
+import ErrorBlock from '../views/local/ErrorBlock';
 
 import fetchData from '../../services/fetch';
 
@@ -24,6 +26,8 @@ const GamePage = () => {
     const params = useParams();
 
     const selectedGame = useSelector(state => state.dataSlice.selectedGame);
+    const isLoading = useSelector(state => state.dataSlice.isLoading);
+    const error = useSelector(state => state.dataSlice.error);
 
     useEffect(() => {  
 
@@ -33,7 +37,11 @@ const GamePage = () => {
     
     return (      
         <MainContainer>
-            <GameSection>
+            {Object.keys(error).length !== 0 ? <ErrorBlock /> :
+          <>
+            {isLoading ? <Loader /> :
+            (
+              <GameSection>
                 <h1>{selectedGame.title}</h1>
                 <MainInfo>
                   <GameImg background={selectedGame.thumbnail} />
@@ -61,7 +69,11 @@ const GamePage = () => {
                 <h2>Скриншоты:</h2>
                 <PhotoCarousel photo={selectedGame.screenshots}/>
                 <ButtonBack />
-              </GameSection> 
+              </GameSection>          
+            )
+            }
+          </>        
+          } 
         </MainContainer>    
     )
 }

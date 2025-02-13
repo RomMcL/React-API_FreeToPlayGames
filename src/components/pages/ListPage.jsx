@@ -6,6 +6,8 @@ import { changeCurrentPage, changeSize } from '../../redux-state/redusers/pagina
 
 import CardGame from '../views/local/CardGame';
 import Pagination from '../comps/Pagination';
+import Loader from '../views/local/Loader';
+import ErrorBlock from '../views/local/ErrorBlock';
 
 import fetchData from '../../services/fetch';
 
@@ -22,6 +24,8 @@ const ListPage = () => {
     const gamesList = useSelector(state => state.dataSlice.gamesList);
     const currentPage = useSelector(state => state.paginationSlice.currentPage);
     const pageSize = useSelector(state => state.paginationSlice.pageSize);
+    const isLoading = useSelector(state => state.dataSlice.isLoading);
+    const error = useSelector(state => state.dataSlice.error);
     const dispatch = useDispatch();
 
 
@@ -33,7 +37,7 @@ const ListPage = () => {
     const renderPaginationData = () => {
         const lastDataIndex = currentPage * pageSize;
         const firstDataIndex = lastDataIndex - pageSize;
-        const paginationData =  gamesList.slice(firstDataIndex, lastDataIndex);
+        const paginationData = Object.keys(error).length === 0 && gamesList.slice(firstDataIndex, lastDataIndex);
         return (
             paginationData?.map(game => (
                 <CardGame key={game.id}
@@ -55,33 +59,30 @@ const ListPage = () => {
     const changePageSize = (numberCards) => {
         dispatch(changeSize(numberCards));
     }
-
-
     
     return (      
         <MainContainer>
-
-            <FilterSection>
-                ФИЛЬТРЫ
-            </FilterSection>
-
-            <CardsSection>
-                <h1>Список игр</h1>
-                <CardsContainer>
-                    {renderPaginationData()} 
-                </CardsContainer>
-                
-                <Pagination 
-                    total={gamesList.length}
-                    currentPage={currentPage}
-                    pageSize={pageSize}
-                    arrSizes={[10, 20, 50]}
-                    changePaginate={changePaginate}
-                    changePageSize={changePageSize}
-                />
-
-            </CardsSection>
-                
+            {Object.keys(error).length !== 0 ? <ErrorBlock /> :
+            <>
+                <FilterSection>
+                    ФИЛЬТРЫ                   
+                </FilterSection>
+                <CardsSection>
+                    <h1>Список игр</h1>
+                    <CardsContainer>
+                        {isLoading ? <Loader /> : renderPaginationData()} 
+                    </CardsContainer>
+                    {!isLoading && <Pagination 
+                        total={gamesList.length}
+                        currentPage={currentPage}
+                        pageSize={pageSize}
+                        arrSizes={[10, 20, 50]}
+                        changePaginate={changePaginate}
+                        changePageSize={changePageSize}
+                    />}                                
+                </CardsSection>
+            </>
+            }                
         </MainContainer>     
     )
 }
