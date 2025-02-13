@@ -11,7 +11,7 @@ const Loader = () => {
     return (       
         <BlockContainer>
             <h2>Загрузка...</h2>
-            <BlockImage img={loaderImage} />
+            <BlockImage $img={loaderImage} />
             <h3>придётся подождать</h3>
         </BlockContainer>        
     )

@@ -20,7 +20,7 @@ const CardGame = (props) => {
     return (
       <>
         <Card onClick={selectGameCard.bind(this, gameID)} >
-            <Image background={thumbnail} />
+            <Image $background={thumbnail} />
             <Title>{title}</Title>
             <Info>
                 <p><span>Жанр:</span>{genre}</p>

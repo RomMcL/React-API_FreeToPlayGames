@@ -10,6 +10,10 @@ const cssMain = {
         width: 100%;
         z-index: 1;
 
+        @media (max-width: 960px) {
+            flex-flow: column nowrap;
+            align-items: center;            
+        }
     `,
    
 }

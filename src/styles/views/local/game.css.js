@@ -11,7 +11,7 @@ const cssGame = {
         width: 100%;        
     `,
     GameImg: styled.div`
-        background-image: url(${({ background }) => background});
+        background-image: url(${props => props.$background});
         border-radius: 1rem;
         width: 100%;
         max-width: 360px;        
@@ -48,7 +48,7 @@ const cssGame = {
         aspect-ratio: 1.7 / 1;
         border-radius: 1rem;        
         background-color: #000;
-        background-image: url(${({ background }) => background});
+        background-image: url(${props => props.$background});
         background-size: 92% 92%;
         background-repeat: no-repeat;
         background-position:  center;        

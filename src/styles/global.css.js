@@ -1,22 +1,22 @@
 import { createGlobalStyle } from 'styled-components';
 
-import CaveatTTF from './../font/Caveat-VariableFont_wght.ttf';
+//import CaveatTTF from '../font/Caveat-VariableFont_wght.ttf';
 
-export default createGlobalStyle `
-
-    @font-face {
+/* @font-face {
         font-family: 'caveat';
         src: url(${CaveatTTF}) format('truetype');
         font-weight: normal;
         font-style: normal;
-    }
-   
+        font-display: fallback;
+    } */
+
+export default createGlobalStyle `
+      
 /* Цветовая схема */
     :root {
     --color-1: rgba(191,180,148,1); /* #bfb494 */
     --color-2: rgba(255,216,107,1); /* #ffd86b */
     --color-3: rgba(255,235,179,1); /* #FFEBB3 */
-    
     }
 
 /* Сброс стилей */

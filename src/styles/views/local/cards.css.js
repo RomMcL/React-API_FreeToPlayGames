@@ -29,7 +29,7 @@ const cssCards = {
         }
     `,
     Image: styled.div`
-        background-image: url(${({ background }) => background});
+        background-image: url(${props => props.$background});
         border-radius: 1rem 1rem 0 0;
         height: 11.5rem;
         background-color: #000;

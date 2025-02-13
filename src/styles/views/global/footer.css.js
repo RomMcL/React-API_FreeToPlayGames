@@ -16,6 +16,18 @@ const cssFooter = {
         margin-top: -2rem;
         font-size: 1.3rem;
 
+        @media (max-width: 751px) {
+            justify-content: space-around;
+            & button {
+                order: -1;
+                width: 70%;
+            }
+        }
+        @media (max-width: 520px) {
+            > div:first-child {
+                order: 1;
+            }
+        }
     `,
     FooterElements: {
         CopyrightBlock: styled.div`
@@ -51,7 +63,7 @@ const cssFooter = {
                 };
             }
         `,
-    }
+    },
 
 }
 

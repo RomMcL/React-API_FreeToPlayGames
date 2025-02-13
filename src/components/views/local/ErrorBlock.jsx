@@ -16,7 +16,7 @@ const ErrorBlock = () => {
         <BlockContainer>
             <h2>Упс! Что-то сломалось...</h2>
             <h3>{error.text}</h3>
-            <BlockImage img={errorImage} />
+            <BlockImage $img={errorImage} />
             {error.type === 'http' ? <h4>Повторим запрос через {error.attempt * 5} секунд...</h4> :
                 <>
                     <h4>Возможные причины:</h4>

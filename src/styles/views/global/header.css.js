@@ -16,10 +16,16 @@ const cssHeader = {
     `,
     HeaderElements: {
         SiteLogo: styled.div`
-            width: 76px;
+            width: 5rem;
             aspect-ratio: 1 / 1;
-            background-color: #fff;
- 
+            background-image: url(${props => props.$background});
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+
+            @media (max-width: 465px) { 
+                width: 3.5rem;
+            }
         `,
         SiteName: styled.div`
             font-size: 2rem;
@@ -28,6 +34,12 @@ const cssHeader = {
             text-align: center;
             flex-grow: 1;
 
+            @media (max-width: 570px) { 
+                font-size: 1.5rem;
+            }
+            @media (max-width: 465px) { 
+                font-size: 1.0rem;
+            }
         `,
         
     }

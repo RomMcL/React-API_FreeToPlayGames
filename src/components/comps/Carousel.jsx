@@ -14,7 +14,7 @@ const PhotoCarousel = (props) => {
         <CarouselContainer>
             <Carousel arrows infinite={false}>
                 {photo?.map(ph => (
-                    <Slide key={ph.id} background={ph.image} />                                  
+                    <Slide key={ph.id} $background={ph.image} />                                  
                 ))}
             </Carousel>
         </CarouselContainer>      

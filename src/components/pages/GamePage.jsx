@@ -59,7 +59,7 @@ const GamePage = () => {
               <GameSection>
                 <h1>{selectedGame.title}</h1>
                 <MainInfo>
-                  <GameImg background={selectedGame.thumbnail} />
+                  <GameImg $background={selectedGame.thumbnail} />
                   <GameInfo>
                     <h3>Информация:</h3>
                     <p><span>Жанр:</span> {selectedGame.genre}</p>

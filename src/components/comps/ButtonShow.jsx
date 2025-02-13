@@ -1,38 +1,21 @@
 import React from 'react';
 
-import { useSelector } from 'react-redux';
+import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import { Button, Tooltip } from 'antd';
 
-import { Button } from 'antd';
-import { PoweroffOutlined, SyncOutlined } from '@ant-design/icons';
-import { ConfigProvider } from 'antd';
-
-
-const ButtonLoading = (props) => {
-
-    const { children, action } = props;
-
-    const isLoading = useSelector(state => state.dataSlice.isLoading);
-
+const ButtonShow = (props) => {
+    const { action, show } = props;
     return (
-        <ConfigProvider
-            theme={{
-                token: {
-                fontFamily: "caveat",
-                fontSize: "1.2rem"
-                }
-            }}
-        >
-            <Button
-                type="primary"
-                icon={<PoweroffOutlined />}
-                loading={isLoading && { icon: <SyncOutlined spin /> }}
+        <Tooltip title={!show ? 'Раскрыть' : 'Скрыть'} color={'geekblue'}>
+            <Button 
+                type="primary" 
+                shape="circle" 
+                icon={!show ? <DownOutlined /> : <UpOutlined />} 
                 onClick={action}
-                style={{ width: 186, fontWeight: 'bold' }}
-            >
-                {children}
-            </Button>
-        </ConfigProvider>
+            />
+        </Tooltip>
     )
+    
 }
 
-export default ButtonLoading;
+export default ButtonShow;

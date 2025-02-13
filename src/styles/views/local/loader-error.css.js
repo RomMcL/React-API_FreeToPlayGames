@@ -14,7 +14,7 @@ const cssLoaderError = {
         width: 50%;
         max-width: 100px;
         aspect-ratio: 1 / 1.2;
-        background-image: url(${props => props.img});
+        background-image: url(${props => props.$img});
         background-repeat: no-repeat;
         background-size: contain;
         background-position: center;
