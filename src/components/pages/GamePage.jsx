@@ -1,9 +1,10 @@
 import React from 'react';
 import { useEffect } from 'react';
+import { useUpdateEffect } from '../../custom-hooks/custom-hook-lib';
 
 import { useParams } from "react-router-dom";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
 import { changeSelectedGame } from '../../redux-state/redusers/data';
 
 import ButtonBack from '../comps/ButtonBack';
@@ -29,16 +30,25 @@ const GamePage = () => {
     const selectedGame = useSelector(state => state.dataSlice.selectedGame);
     const isLoading = useSelector(state => state.dataSlice.isLoading);
     const error = useSelector(state => state.dataSlice.error);
+    const dispatch = useDispatch();
 
-    useEffect(() => {  
-
-        fetchData(`/game?id=${params.gameID}`, changeSelectedGame);
-
+    useEffect(() => {   
+        if (sessionStorage.getItem(`${params.gameID}`) !== null &&
+            JSON.parse(sessionStorage.getItem(`${params.gameID}`))[1] >= new Date().getTime()) {
+          dispatch(changeSelectedGame(JSON.parse(sessionStorage.getItem(`${params.gameID}`))[0]));    
+        } else fetchData(`/game?id=${params.gameID}`, changeSelectedGame);
+        
         return () => {
-            abortController();
-            reinitController();
-          };
+          abortController();
+          reinitController();
+        };
       }, []);
+        
+      useUpdateEffect(() => {
+        const timeLimit = ((date = new Date()) => {return date.setMinutes(date.getMinutes() + 5)})();
+        const storage = [selectedGame, timeLimit];
+        sessionStorage.setItem(`${params.gameID}`, JSON.stringify(storage));
+      }, [selectedGame]);
     
     return (      
         <MainContainer>
