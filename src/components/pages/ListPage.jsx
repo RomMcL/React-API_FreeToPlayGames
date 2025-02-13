@@ -10,6 +10,7 @@ import Loader from '../views/local/Loader';
 import ErrorBlock from '../views/local/ErrorBlock';
 
 import fetchData from '../../services/fetch';
+import { abortController, reinitController } from '../../services/abortController';
 
 import cssMain from '../../styles/views/global/main.css';
 import cssSections from '../../styles/views/local/sections.css';
@@ -30,7 +31,11 @@ const ListPage = () => {
 
 
     useEffect(() => {
-        fetchData('/games', changeGamesList);
+        !gamesList.length && fetchData('/games', changeGamesList);
+        return () => {
+            abortController();
+            reinitController();
+        };
     }, []);
 
 

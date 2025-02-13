@@ -17,7 +17,7 @@ const ErrorBlock = () => {
             <h2>Упс! Что-то сломалось...</h2>
             <h3>{error.text}</h3>
             <BlockImage img={errorImage} />
-            {error.type === 'http' ? <h4>бяда бяда огорчение</h4> :
+            {error.type === 'http' ? <h4>Повторим запрос через {error.attempt * 5} секунд...</h4> :
                 <>
                     <h4>Возможные причины:</h4>
                     <p>Код 404 - ресурс не найден.</p>
