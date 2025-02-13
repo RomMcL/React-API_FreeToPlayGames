@@ -1,11 +1,18 @@
 import React from 'react';
 
+import cssHeader from '../../../styles/views/global/header.css';
+
+const { HeaderContainer, HeaderElements  } = cssHeader;
+
 const Header = () => {
     
     return (      
-    <div>
-        <h1>Header</h1>
-    </div>     
+        <HeaderContainer>
+            <HeaderElements.SiteLogo />
+            <HeaderElements.SiteName>
+                <h1>Free To Play Games</h1>
+            </HeaderElements.SiteName>
+        </HeaderContainer>
     )
 }
   
