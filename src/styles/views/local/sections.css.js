@@ -4,6 +4,48 @@ const cssSections = {
     FilterSection: styled.section`
         display: flex;
         flex-flow: column nowrap;
+        align-items: center;
+        justify-content: flex-start;
+        row-gap: 1em;
+        padding: 1em;
+        background-color: var(--color-3);
+        min-width: fit-content;
+        height: fit-content;
+        margin-top: 3.7rem;
+        border-radius: 0 1rem 1rem 0;
+        box-shadow: 0 0 5rem rgba(0,0,0,0.3);
+        position: sticky;
+        top: 3.7rem;
+        z-index: 5;
+            > div:first-child {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: center;
+                align-items: center;
+                column-gap: 1rem;
+                & h3 {
+                    text-shadow: 0px 4px 4px rgba(191,180,148, 0.79);
+                    letter-spacing: 0.2em;
+                    cursor: pointer;
+                }
+                & button {
+                    display: none;
+                }
+            }
+            > div:nth-of-type(2) {
+                display: flex;
+                flex-flow: column nowrap;
+                align-items: center;
+                justify-content: center;
+                row-gap: 0.7rem;
+                & h4 {
+                    margin-bottom: 0.3rem;
+                }
+            }            
+            > button {
+                margin: 0.7rem 0;
+            }
+        
         
     `,
     CardsSection: styled.section`

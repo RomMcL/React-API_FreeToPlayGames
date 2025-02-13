@@ -1,13 +1,17 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { changeGamesList } from '../../redux-state/redusers/data';
 import { changeCurrentPage, changeSize } from '../../redux-state/redusers/pagination-gamelist';
+import { changeisShowFilters } from '../../redux-state/redusers/filters';
 
 import CardGame from '../views/local/CardGame';
 import Pagination from '../comps/Pagination';
 import Loader from '../views/local/Loader';
 import ErrorBlock from '../views/local/ErrorBlock';
+import Filters from '../views/local/Filters';
+import ButtonShow from '../comps/ButtonShow';
+import ButtonLoading from '../comps/ButtonLoading';
 
 import fetchData from '../../services/fetch';
 import { abortController, reinitController } from '../../services/abortController';
@@ -27,11 +31,23 @@ const ListPage = () => {
     const pageSize = useSelector(state => state.paginationSlice.pageSize);
     const isLoading = useSelector(state => state.dataSlice.isLoading);
     const error = useSelector(state => state.dataSlice.error);
+    const isShowFilters = useSelector(state => state.filtersSlice.isShowFilters);
+    const platform = useSelector(state => state.filtersSlice.platform);
+    const genre = useSelector(state => state.filtersSlice.genre);
+    const sort = useSelector(state => state.filtersSlice.sort);
     const dispatch = useDispatch();
 
 
+    const request = useRef(``);
+
+    const applyFilters = () => {
+        request.current = `/games?platform=${platform}&sort-by=${sort}`;
+        genre !== 'all' && (request.current += `&category=${genre}`);
+        fetchData(request.current, changeGamesList);
+    }
+
     useEffect(() => {
-        !gamesList.length && fetchData('/games', changeGamesList);
+        !gamesList.length && applyFilters();
         return () => {
             abortController();
             reinitController();
@@ -70,7 +86,18 @@ const ListPage = () => {
             {Object.keys(error).length !== 0 ? <ErrorBlock /> :
             <>
                 <FilterSection>
-                    ФИЛЬТРЫ                   
+                    <div>
+                        <h3 onClick={() => dispatch(changeisShowFilters(!isShowFilters))}>ФИЛЬТРЫ</h3>
+                        <ButtonShow action={() => dispatch(changeisShowFilters(!isShowFilters))} show={isShowFilters}/>
+                    </div>
+                    {isShowFilters && (
+                        <>
+                            <Filters />
+                            <ButtonLoading action={applyFilters}>
+                                Применить фильтры
+                            </ButtonLoading>
+                        </>
+                    )}                   
                 </FilterSection>
                 <CardsSection>
                     <h1>Список игр</h1>
