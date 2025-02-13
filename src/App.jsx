@@ -8,6 +8,7 @@ import GamePage from './components/pages/GamePage';
 import AboutPage from './components/pages/AboutPage';
 import Footer from './components/views/global/Footer';
 
+import '@ant-design/v5-patch-for-react-19';
 
 function App() {
 
@@ -20,7 +21,7 @@ function App() {
           element={<ListPage />}          
         />
         <Route
-          path={'/game'}
+          path={'/game/:gameID'}
           element={<GamePage />}
         />
         <Route

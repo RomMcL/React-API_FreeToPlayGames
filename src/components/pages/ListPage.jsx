@@ -1,68 +1,57 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { changeGamesList, changeSelectedGame } from '../../redux-state/redusers/data';
+import { changeGamesList } from '../../redux-state/redusers/data';
+
+import CardGame from '../views/local/CardGame';
+
+import fetchData from '../../services/fetch';
 
 import cssMain from '../../styles/views/global/main.css';
+import cssSections from '../../styles/views/local/sections.css';
+import cssCards from '../../styles/views/local/cards.css';
 
 const { MainContainer } = cssMain;
+const { FilterSection, CardsSection } = cssSections;
+const { CardsContainer } = cssCards;
 
 const ListPage = () => {
 
     const gamesList = useSelector(state => state.dataSlice.gamesList);
-    const selectedGame = useSelector(state => state.dataSlice.selectedGame);
-    const dispatch = useDispatch();
 
-
-
-    const BASE_URL = 'https://free-to-play-games-database.p.rapidapi.com/api';
-    const OPTIONS = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': 'f858958a6amshc313acb38be0fd6p12e43ejsn128ec01297e2',
-            'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com'
-        },
-    };
-
-    const fetchData = async (request) => {
- 
-        try {            
-            const response = await fetch(`${BASE_URL}${request}`, OPTIONS);
-            if (!response.ok) throw new Error(response.status);                                                 
-            const data = await response.json();
-            dispatch(changeGamesList(data));
-        } catch (err) {
-
-            console.log(err.message);
-             
-        } finally {
-            console.log(`Запрос обработан`);
-        }
-    };
 
 
     useEffect(() => {
-        fetchData('/games');
+        fetchData('/games', changeGamesList);
     }, []);
 
-    console.log(gamesList)
+  //  console.log(gamesList)
 
     
     return (      
-    <MainContainer>
+        <MainContainer>
 
-        <div>
-            {
-                gamesList?.map(game => (
-                    <p key={game.id}>{game.title}</p>                                 
-                ))
-            }
+            <FilterSection>
+                ФИЛЬТРЫ
+            </FilterSection>
 
-        </div>
-
-        <h1>List Page</h1>
-               
-    </MainContainer>     
+            <CardsSection>
+                <h1>Список игр</h1>
+                <CardsContainer>
+                    {gamesList?.map(game => (
+                        <CardGame key={game.id}
+                            thumbnail={game.thumbnail}
+                            title={game.title}
+                            genre={game.genre}
+                            publisher={game.publisher}
+                            releaseDate={game.release_date.split("-").reverse().join(".")}
+                            gameID={game.id}
+                        />                                   
+                    ))} 
+                </CardsContainer>                               
+            </CardsSection>
+                
+        </MainContainer>     
     )
 }
   
