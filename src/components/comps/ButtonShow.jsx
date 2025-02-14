@@ -6,7 +6,7 @@ import { Button, Tooltip } from 'antd';
 const ButtonShow = (props) => {
     const { action, show } = props;
     return (
-        <Tooltip title={!show ? 'Раскрыть' : 'Скрыть'} color={'geekblue'}>
+        <Tooltip title={!show ? 'Раскрыть' : 'Скрыть'} color={'geekblue'} mouseLeaveDelay={0}>
             <Button 
                 type="primary" 
                 shape="circle" 

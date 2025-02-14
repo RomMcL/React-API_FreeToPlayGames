@@ -109,6 +109,70 @@ const cssSections = {
             margin-bottom: -0.8rem;
         }
     `,
+    AboutSection: styled.section`
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: flex-start;
+        justify-content: center;
+        row-gap: 1em;
+        padding: 1em;
+        width: 100%;
+        max-width: 60rem;
+        margin: 0 auto;
+        font-size: 1.4rem;
+            & div {
+                width: 100%;
+                display: grid;
+                grid-template-columns: 0.5fr 1fr;
+                > div {
+                    display: flex;
+                    flex-flow: column nowrap;
+                    grid-column-start: 1;
+                    grid-column-end: 3;
+                    > ul {
+                        list-style-position: inside;
+                        padding-inline: 0.5rem;
+                        border-radius: 1rem;
+                        background-color: var(--color-3);
+                        > li {
+                            list-style-type: circle;
+                            > span {font-weight: bold;}
+                            > a {font-weight: bold; color: blue}
+                        }
+                        & ul {
+                            list-style-position: inside;
+                            > li {
+                            list-style-type: "- ";
+                            margin-left: 1rem;
+                            font-weight: normal;
+                        }
+                        }
+
+                    }
+                } 
+                
+            }
+            & div:nth-of-type(1) button {
+                align-self: center;
+            }
+
+            @media (max-width: 880px) {
+                & div {
+                    grid-template-columns: 1fr 1fr;
+                }            
+            }
+            @media (max-width: 600px) {
+                & div {
+                    grid-template-columns: 2fr 1fr;
+                }            
+            }
+            @media (max-width: 470px) {
+                & div {
+                    grid-template-columns: 8fr 1fr;
+                }            
+            }
+       
+    `,
    
 }
 
