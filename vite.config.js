@@ -5,7 +5,8 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: "localhost",
+    host: 'localhost',
     port: 3001,
   },
+  base: '/React-API_FreeToPlayGames/',
 })

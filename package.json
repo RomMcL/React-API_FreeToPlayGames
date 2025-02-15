@@ -3,17 +3,21 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://rommcl.github.io/react-api-freetoplaygames/",
   "scripts": {
     "dev": "vite",
     "start": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "@reduxjs/toolkit": "^2.5.1",
     "antd": "^5.24.0",
+    "gh-pages": "^6.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0",

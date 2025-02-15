@@ -1,5 +1,5 @@
 <a id="top-page"></a>
-![Сайт - "Free Games"](src/image/logo.png)
+![Сайт - "Free Games"](src/images/logo.png)
 
 # Free To Play Games
 
