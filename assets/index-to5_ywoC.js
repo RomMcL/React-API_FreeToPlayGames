@@ -127,6 +127,14 @@ Please change the parent <Route path="${R}"> to <Route path="${R==="/"?"*":`${R}
             box-shadow: 0 0 5rem rgba(0,0,0,0.5);
             cursor: pointer;
         }
+
+        @media (max-width: 736px) { 
+            &:hover {
+                background-color: var(--color-3);
+                transform: none;
+                box-shadow: 0 0 5rem rgba(0,0,0,0.3);;
+            }      
+        }  
     `,Image:Sn.div`
         background-image: url(${e=>e.$background});
         border-radius: 1rem 1rem 0 0;
