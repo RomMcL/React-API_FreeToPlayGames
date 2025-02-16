@@ -5,6 +5,8 @@ import { changeGamesList } from '../../redux-state/redusers/data';
 import { changeCurrentPage, changeSize } from '../../redux-state/redusers/pagination-gamelist';
 import { changeisShowFilters } from '../../redux-state/redusers/filters';
 
+import { useResize } from '../../custom-hooks/custom-hook-lib';
+
 import CardGame from '../views/local/CardGame';
 import Pagination from '../comps/Pagination';
 import Loader from '../views/local/Loader';
@@ -14,7 +16,6 @@ import ButtonShow from '../comps/ButtonShow';
 import ButtonLoading from '../comps/ButtonLoading';
 
 import fetchData from '../../services/fetch';
-import { abortController, reinitController } from '../../services/abortController';
 
 import cssMain from '../../styles/views/global/main.css';
 import cssSections from '../../styles/views/local/sections.css';
@@ -37,6 +38,7 @@ const ListPage = () => {
     const sort = useSelector(state => state.filtersSlice.sort);
     const dispatch = useDispatch();
 
+    const { isScreenTablet } = useResize();
 
     const request = useRef(``);
 
@@ -47,11 +49,11 @@ const ListPage = () => {
     }
 
     useEffect(() => {
+        dispatch(changeisShowFilters(isScreenTablet));
+    }, [isScreenTablet]);
+
+    useEffect(() => {
         !gamesList.length && applyFilters();
-        return () => {
-            abortController();
-            reinitController();
-        };
     }, []);
 
 
@@ -97,7 +99,7 @@ const ListPage = () => {
                                 Применить фильтры
                             </ButtonLoading>
                         </>
-                    )}                   
+                    )} 
                 </FilterSection>
                 <CardsSection>
                     <h1>Список игр</h1>

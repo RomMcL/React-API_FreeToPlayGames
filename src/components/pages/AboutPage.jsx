@@ -53,9 +53,6 @@ const AboutPage = () => {
         }})
     }
 
-
-
-
     return (       
     <MainContainer>
         <AboutSection>

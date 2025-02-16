@@ -13,7 +13,6 @@ import Loader from '../views/local/Loader';
 import ErrorBlock from '../views/local/ErrorBlock';
 
 import fetchData from '../../services/fetch';
-import { abortController, reinitController } from '../../services/abortController';
 
 import cssMain from '../../styles/views/global/main.css';
 import cssSections from '../../styles/views/local/sections.css';
@@ -37,11 +36,6 @@ const GamePage = () => {
             JSON.parse(sessionStorage.getItem(`${params.gameID}`))[1] >= new Date().getTime()) {
           dispatch(changeSelectedGame(JSON.parse(sessionStorage.getItem(`${params.gameID}`))[0]));    
         } else fetchData(`/game?id=${params.gameID}`, changeSelectedGame);
-        
-        return () => {
-          abortController();
-          reinitController();
-        };
       }, []);
         
       useUpdateEffect(() => {

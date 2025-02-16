@@ -8,5 +8,5 @@ export default defineConfig({
     host: 'localhost',
     port: 3001,
   },
-  base: '/React-API_FreeToPlayGames/',
+  base: '/React-API_FreeToPlayGames',
 })
