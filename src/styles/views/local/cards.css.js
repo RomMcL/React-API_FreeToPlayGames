@@ -27,6 +27,14 @@ const cssCards = {
             box-shadow: 0 0 5rem rgba(0,0,0,0.5);
             cursor: pointer;
         }
+
+        @media (max-width: 736px) { 
+            &:hover {
+                background-color: var(--color-3);
+                transform: none;
+                box-shadow: 0 0 5rem rgba(0,0,0,0.3);;
+            }      
+        }  
     `,
     Image: styled.div`
         background-image: url(${props => props.$background});

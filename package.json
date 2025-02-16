@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://rommcl.github.io/react-api-freetoplaygames/",
+  "homepage": "https://rommcl.github.io/React-API_FreeToPlayGames",
   "scripts": {
     "dev": "vite",
     "start": "vite",
