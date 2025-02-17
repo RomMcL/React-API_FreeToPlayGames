@@ -27,8 +27,8 @@ const PaginationGameList = (props) => {
                 current={currentPage}
                 pageSize={pageSize}
                 onChange={(current, newPageSize) => {
-                    changePageSize(newPageSize)
-                    changePaginate(pageSize !== newPageSize ? 1 : current)
+                    changePageSize(newPageSize);
+                    changePaginate(pageSize !== newPageSize ? 1 : current);
                 }}
                 showSizeChanger
                 pageSizeOptions={arrSizes}             

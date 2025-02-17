@@ -47,6 +47,10 @@ const ListPage = () => {
         request.current = `/games?platform=${platform}&sort-by=${sort}`;
         genre !== 'all' && (request.current += `&category=${genre}`);
         fetchData(request.current, changeGamesList);
+        // сворачивание на малых экранах
+        !isScreenTablet && dispatch(changeisShowFilters(false));
+        // сброс пагинации
+        dispatch(changeCurrentPage(1));
     }
 
     useEffect(() => {
@@ -94,6 +98,7 @@ const ListPage = () => {
 
     const changePaginate = (pageNumber) => {
         dispatch(changeCurrentPage(pageNumber));
+        window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
     }
 
     const changePageSize = (numberCards) => {
