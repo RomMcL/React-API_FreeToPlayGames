@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { changeGamesList } from '../../redux-state/redusers/data';
 import { changeCurrentPage, changeSize } from '../../redux-state/redusers/pagination-gamelist';
 import { changeisShowFilters } from '../../redux-state/redusers/filters';
+import { changeScroll } from '../../redux-state/redusers/scroll';
 
 import { useResize } from '../../custom-hooks/custom-hook-lib';
 
@@ -54,8 +55,23 @@ const ListPage = () => {
 
     useEffect(() => {
         !gamesList.length && applyFilters();
+
+        const handleScroll = (e) => {
+            dispatch(changeScroll(window.scrollY));      
+          }
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
     }, []);
 
+    const colorCard = (gameID) => {
+        if (sessionStorage.getItem(`${gameID}`) !== null &&
+            JSON.parse(sessionStorage.getItem(`${gameID}`))[1] >= new Date().getTime()) {
+            return 'var(--color-1)';
+        }
+        return 'var(--color-3)';
+    }
 
     const renderPaginationData = () => {
         const lastDataIndex = currentPage * pageSize;
@@ -70,6 +86,7 @@ const ListPage = () => {
                     publisher={game.publisher}
                     releaseDate={game.release_date.split("-").reverse().join(".")}
                     gameID={game.id}
+                    colorCard={colorCard(game.id)}
                 />                                   
             ))
         );
@@ -84,40 +101,43 @@ const ListPage = () => {
     }
     
     return (      
-        <MainContainer>
-            {Object.keys(error).length !== 0 ? <ErrorBlock /> :
-            <>
-                <FilterSection>
-                    <div>
-                        <h3 onClick={() => dispatch(changeisShowFilters(!isShowFilters))}>ФИЛЬТРЫ</h3>
-                        <ButtonShow action={() => dispatch(changeisShowFilters(!isShowFilters))} show={isShowFilters}/>
-                    </div>
-                    {isShowFilters && (
-                        <>
-                            <Filters />
-                            <ButtonLoading action={applyFilters}>
-                                Применить фильтры
-                            </ButtonLoading>
-                        </>
-                    )} 
-                </FilterSection>
-                <CardsSection>
-                    <h1>Список игр</h1>
-                    <CardsContainer>
-                        {isLoading ? <Loader /> : renderPaginationData()} 
-                    </CardsContainer>
-                    {!isLoading && <Pagination 
-                        total={gamesList.length}
-                        currentPage={currentPage}
-                        pageSize={pageSize}
-                        arrSizes={[10, 20, 50]}
-                        changePaginate={changePaginate}
-                        changePageSize={changePageSize}
-                    />}                                
-                </CardsSection>
-            </>
-            }                
-        </MainContainer>     
+        <>
+            <MainContainer>
+                {Object.keys(error).length !== 0 ? <ErrorBlock /> :
+                <>
+                    <FilterSection>
+                        <div>
+                            <h3 onClick={() => dispatch(changeisShowFilters(!isShowFilters))}>ФИЛЬТРЫ</h3>
+                            <ButtonShow action={() => dispatch(changeisShowFilters(!isShowFilters))} show={isShowFilters}/>
+                        </div>
+                        {isShowFilters && (
+                            <>
+                                <Filters />
+                                <ButtonLoading action={applyFilters}>
+                                    Применить фильтры
+                                </ButtonLoading>
+                            </>
+                        )} 
+                    </FilterSection>
+                    <CardsSection>
+                        <h1>Список игр</h1>
+                        <CardsContainer>
+                            {isLoading ? <Loader /> : renderPaginationData()} 
+                        </CardsContainer>
+                        {!isLoading && <Pagination 
+                            total={gamesList.length}
+                            currentPage={currentPage}
+                            pageSize={pageSize}
+                            arrSizes={[10, 20, 50]}
+                            changePaginate={changePaginate}
+                            changePageSize={changePageSize}
+                        />}                                
+                    </CardsSection>
+                </>
+                }
+            </MainContainer>  
+        </>
+           
     )
 }
   

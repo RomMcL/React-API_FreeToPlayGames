@@ -50,6 +50,7 @@ const fetchData = async (request, changeableState, attempt=1) => {
                 await fetchData(request, changeableState, attempt+1);
               } catch (e) {
                 console.warn('Аборт промиса автозапроса');
+                store.dispatch(changeError({text: `Попытки были прерваны. Ошибка ${err.message}.`, type: 'any'}));
               }                           
             } else {
                 store.dispatch(changeError({text: `Попытки кончились. Ошибка ${err.message}.`, type: 'any'}));

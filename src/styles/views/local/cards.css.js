@@ -11,7 +11,7 @@ const cssCards = {
         width: 100%;
     `,
     Card: styled.div`
-        background-color: var(--color-3);
+        background-color: ${props => props.$colorCard};
         display: flex;
         flex-flow: column nowrap;
         width: 100%;
@@ -30,9 +30,9 @@ const cssCards = {
 
         @media (max-width: 736px) { 
             &:hover {
-                background-color: var(--color-3);
+                background-color: ${props => props.$colorCard};
                 transform: none;
-                box-shadow: 0 0 5rem rgba(0,0,0,0.3);;
+                box-shadow: 0 0 5rem rgba(0,0,0,0.3);
             }      
         }  
     `,

@@ -43,7 +43,7 @@ const GamePage = () => {
         const storage = [selectedGame, timeLimit];
         sessionStorage.setItem(`${params.gameID}`, JSON.stringify(storage));
       }, [selectedGame]);
-    
+
     return (      
         <MainContainer>
             {Object.keys(error).length !== 0 ? <ErrorBlock /> :
@@ -76,7 +76,10 @@ const GamePage = () => {
                   </GameInfo>
                 </MainInfo>
                 <h2>Скриншоты:</h2>
-                <PhotoCarousel photo={selectedGame.screenshots}/>
+                {!!selectedGame.screenshots?.length
+                ? <PhotoCarousel photo={selectedGame.screenshots}/>
+                : <p>Для этой игры скриншоты отсутствуют</p>
+                }
                 <ButtonBack />
               </GameSection>          
             )

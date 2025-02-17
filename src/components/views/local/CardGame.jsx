@@ -8,7 +8,7 @@ const { Card, Image, Title, Info } = cssCards;
 
 const CardGame = (props) => {
   
-    const { thumbnail, title, genre, publisher, releaseDate, gameID } = props;
+    const { thumbnail, title, genre, publisher, releaseDate, gameID, colorCard } = props;
 
     const navigate = useNavigate();
 
@@ -19,7 +19,7 @@ const CardGame = (props) => {
 
     return (
       <>
-        <Card onClick={selectGameCard.bind(this, gameID)} >
+        <Card onClick={selectGameCard.bind(this, gameID)} $colorCard={colorCard} >
             <Image $background={thumbnail} />
             <Title>{title}</Title>
             <Info>

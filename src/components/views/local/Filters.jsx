@@ -39,7 +39,7 @@ const Filters = () => {
                 />
             </div>
             <div>
-                <h4>Жанр:</h4>
+                <h4>Жанр/Хештег:</h4>
                 <SelectAntd 
                     options={options.genresOptions} 
                     defaultValue={genre} 
