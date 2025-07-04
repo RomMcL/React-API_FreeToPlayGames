@@ -12,6 +12,9 @@ const OPTIONS = {
     },
 };
 
+const myAPI_link = `https://SosiBibuSanction.pythonanywhere.com/parametrs?`;
+const keyMyAPI = 'mneRomaRazreshil';
+
 const sleep = (ms, signal) => {
     return new Promise((resolve, reject) => {
 
@@ -25,29 +28,50 @@ const sleep = (ms, signal) => {
     });
 }
 
-const fetchData = async (request, changeableState, attempt=1) => {
+const fetchData = async (request, changeableState, isSanctions, attempt=1 ) => {
     
     store.dispatch(changeLoadingStatus(true));
     store.dispatch(changeError({}));
     store.dispatch(changeMessage(''));
     
     try {
-        const response = await fetch(`${BASE_URL}${request}`, {...OPTIONS, signal: getControllerSignal()});
-        if (!response.ok) throw new Error(response.status);                                                 
+        let response;
+
+        if (!isSanctions) {
+            response = await fetch(`${BASE_URL}${request}`, {...OPTIONS, signal: getControllerSignal()});
+        } else {
+            
+            const requestSplit = request.split('&');
+            response = await fetch(`${myAPI_link}key=${keyMyAPI}&req=${requestSplit}`,
+                { 
+                    method: 'get', 
+                    mode: 'cors' 
+                });
+
+                store.dispatch(changeError({}));
+            
+        }
+
+        if (!response.ok) throw new Error(response.status);
+
         const data = await response.json();
-        store.dispatch(changeableState(data));
+
+        if (data['romaSay'] != undefined) {
+            store.dispatch(changeError({text: `${data.romaSay} ${data.error}.`, type: 'any'}));
+        } else store.dispatch(changeableState(data));
+
     } catch (err) {
         if (err.name === 'AbortError') {
             store.dispatch(changeMessage('AbortError: запрос был прерван.'));
           } else if (err.name === 'Error' || err.message === 'Failed to fetch') {
 
-            store.dispatch(changeError({text: `Ошибка HTTP: ${err.message}`, type: 'http', attempt: attempt}));
+            store.dispatch(changeError({text: `Ошибка HTTP: ${err.message}`, type: 'http', attempt: attempt}));        
 
             if (attempt <= 3) {
               reinitSleep();
               try {
                 await sleep(attempt*5000, getSleepSignal());
-                await fetchData(request, changeableState, attempt+1);
+                await fetchData(request, changeableState, isSanctions, attempt+1);
               } catch (e) {
                 console.warn('Аборт промиса автозапроса');
                 store.dispatch(changeError({text: `Попытки были прерваны. Ошибка ${err.message}.`, type: 'any'}));

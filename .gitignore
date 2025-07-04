@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+python_Flask_SanctionAPI
+
+# Secrets
+secrets.js
+

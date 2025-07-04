@@ -29,13 +29,14 @@ const GamePage = () => {
     const selectedGame = useSelector(state => state.dataSlice.selectedGame);
     const isLoading = useSelector(state => state.dataSlice.isLoading);
     const error = useSelector(state => state.dataSlice.error);
+    const isSanctions = useSelector(state => state.dataSlice.sanctions);
     const dispatch = useDispatch();
 
     useEffect(() => {   
         if (sessionStorage.getItem(`${params.gameID}`) !== null &&
             JSON.parse(sessionStorage.getItem(`${params.gameID}`))[1] >= new Date().getTime()) {
           dispatch(changeSelectedGame(JSON.parse(sessionStorage.getItem(`${params.gameID}`))[0]));    
-        } else fetchData(`/game?id=${params.gameID}`, changeSelectedGame);
+        } else fetchData(`/game?id=${params.gameID}`, changeSelectedGame, isSanctions);
       }, []);
         
       useUpdateEffect(() => {

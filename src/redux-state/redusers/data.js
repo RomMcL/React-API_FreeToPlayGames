@@ -6,6 +6,7 @@ const initialState = {
     isLoading: false,
     error: {},
     message: '',
+    sanctions: false,
 
 }
 
@@ -28,10 +29,14 @@ export const dataSlice = createSlice({
         changeMessage: (state, action) => {
             state.message = action.payload;
         },
+        changeSanctions: (state, action) => {
+            state.sanctions = action.payload;
+        },
 
         resetData: () => initialState
     }
 });
 
-export const { changeGamesList, changeSelectedGame, changeLoadingStatus, changeError, changeMessage, resetData } = dataSlice.actions;
+export const { changeGamesList, changeSelectedGame, changeLoadingStatus, 
+    changeError, changeMessage, changeSanctions, resetData } = dataSlice.actions;
 export default dataSlice.reducer;

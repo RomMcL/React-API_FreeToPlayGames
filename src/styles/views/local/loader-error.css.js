@@ -18,6 +18,13 @@ const cssLoaderError = {
         }
 
     `,
+    BlockSanctins: styled.div`
+        width: 100%;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+    `,
     BlockImage: styled.div`
         width: 50%;
         max-width: 150px;

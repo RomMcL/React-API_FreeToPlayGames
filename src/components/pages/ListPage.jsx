@@ -6,7 +6,7 @@ import { changeCurrentPage, changeSize } from '../../redux-state/redusers/pagina
 import { changeisShowFilters } from '../../redux-state/redusers/filters';
 import { changeScroll } from '../../redux-state/redusers/scroll';
 
-import { useResize } from '../../custom-hooks/custom-hook-lib';
+import { useResize, useUpdateEffect } from '../../custom-hooks/custom-hook-lib';
 
 import CardGame from '../views/local/CardGame';
 import Pagination from '../comps/Pagination';
@@ -15,6 +15,7 @@ import ErrorBlock from '../views/local/ErrorBlock';
 import Filters from '../views/local/Filters';
 import ButtonShow from '../comps/ButtonShow';
 import ButtonLoading from '../comps/ButtonLoading';
+import SwitchSanctions from '../comps/SwitchSanctions';
 
 import fetchData from '../../services/fetch';
 
@@ -37,6 +38,7 @@ const ListPage = () => {
     const platform = useSelector(state => state.filtersSlice.platform);
     const genre = useSelector(state => state.filtersSlice.genre);
     const sort = useSelector(state => state.filtersSlice.sort);
+    const isSanctions = useSelector(state => state.dataSlice.sanctions);
     const dispatch = useDispatch();
 
     const { isScreenTablet } = useResize();
@@ -46,7 +48,8 @@ const ListPage = () => {
     const applyFilters = () => {
         request.current = `/games?platform=${platform}&sort-by=${sort}`;
         genre !== 'all' && (request.current += `&category=${genre}`);
-        fetchData(request.current, changeGamesList);
+
+        fetchData(request.current, changeGamesList, isSanctions);
         // сворачивание на малых экранах
         !isScreenTablet && dispatch(changeisShowFilters(false));
         // сброс пагинации
@@ -68,6 +71,11 @@ const ListPage = () => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
+
+    useUpdateEffect(() => {
+        applyFilters();
+    }, [isSanctions]);
+
 
     const colorCard = (gameID) => {
         if (sessionStorage.getItem(`${gameID}`) !== null &&
@@ -103,7 +111,7 @@ const ListPage = () => {
 
     const changePageSize = (numberCards) => {
         dispatch(changeSize(numberCards));
-    }
+    }   
     
     return (      
         <>
@@ -121,6 +129,7 @@ const ListPage = () => {
                                 <ButtonLoading action={applyFilters}>
                                     Применить фильтры
                                 </ButtonLoading>
+                                {isSanctions && <SwitchSanctions />}                                
                             </>
                         )} 
                     </FilterSection>

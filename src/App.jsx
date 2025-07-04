@@ -23,11 +23,12 @@ function App() {
 
   const location = useLocation();
   const mess = useSelector(state => state.dataSlice.message);
+  const isSanctions = useSelector(state => state.dataSlice.sanctions);
   const { width, isScreenMobile } = useResize();
 
   useUpdateEffect(() => {
     abortSleep();
-  }, [location]);
+  }, [location, isSanctions]);
 
   useUpdateEffect(() => {
     mess && message.warning(mess);
@@ -41,7 +42,7 @@ function App() {
       <Routes>
         <Route
           path={'/main'}
-          element={<ListPage />}          
+          element={<ListPage />}        
         />
         <Route
           path={'/game/:gameID'}
