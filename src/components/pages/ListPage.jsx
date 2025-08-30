@@ -18,6 +18,8 @@ import ButtonLoading from '../comps/ButtonLoading';
 import SwitchSanctions from '../comps/SwitchSanctions';
 
 import fetchData from '../../services/fetch';
+import replacingImages from '../../services/sanctionsImages';
+import createObject from '../../sanctions/createObjectLinks';
 
 import cssMain from '../../styles/views/global/main.css';
 import cssSections from '../../styles/views/local/sections.css';
@@ -54,6 +56,8 @@ const ListPage = () => {
         !isScreenTablet && dispatch(changeisShowFilters(false));
         // сброс пагинации
         dispatch(changeCurrentPage(1));
+
+    //    createObject()
     }
 
     useEffect(() => {
@@ -61,6 +65,8 @@ const ListPage = () => {
     }, [isScreenTablet]);
 
     useEffect(() => {
+    //    console.log(gamesList)
+
         !gamesList.length && applyFilters();
 
         const handleScroll = (e) => {
@@ -84,7 +90,7 @@ const ListPage = () => {
         }
         return 'var(--color-3)';
     }
-
+   
     const renderPaginationData = () => {
         const lastDataIndex = currentPage * pageSize;
         const firstDataIndex = lastDataIndex - pageSize;
@@ -92,9 +98,10 @@ const ListPage = () => {
         return (
             paginationData?.map(game => (
                 <CardGame key={game.id}
-                    thumbnail={game.thumbnail}
+                //    thumbnail={game.thumbnail}
+                    thumbnail={isSanctions ? replacingImages(game.id).thumbnail : game.thumbnail}
                     title={game.title}
-                    genre={game.genre}
+                    genre={game.genre}                
                     publisher={game.publisher}
                     releaseDate={game.release_date.split("-").reverse().join(".")}
                     gameID={game.id}

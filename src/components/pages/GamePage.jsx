@@ -13,6 +13,7 @@ import Loader from '../views/local/Loader';
 import ErrorBlock from '../views/local/ErrorBlock';
 
 import fetchData from '../../services/fetch';
+import replacingImages from '../../services/sanctionsImages';
 
 import cssMain from '../../styles/views/global/main.css';
 import cssSections from '../../styles/views/local/sections.css';
@@ -45,6 +46,21 @@ const GamePage = () => {
         sessionStorage.setItem(`${params.gameID}`, JSON.stringify(storage));
       }, [selectedGame]);
 
+    const showScreenshots = () => {
+      if (isSanctions) {
+        return !!replacingImages(selectedGame.id).screenshots?.length 
+        ? <PhotoCarousel 
+            photo={isSanctions ? replacingImages(selectedGame.id).screenshots : selectedGame.screenshots}
+          />
+        : <p>Для этой игры скриншоты отсутствуют</p>
+         
+      } else if (!!selectedGame.screenshots?.length) {
+          return  <PhotoCarousel 
+                    photo={selectedGame.screenshots}
+                  />        
+      } else return <p>Для этой игры скриншоты отсутствуют</p>
+    }
+
     return (      
         <MainContainer>
             {Object.keys(error).length !== 0 ? <ErrorBlock /> :
@@ -54,7 +70,9 @@ const GamePage = () => {
               <GameSection>
                 <h1>{selectedGame.title}</h1>
                 <MainInfo>
-                  <GameImg $background={selectedGame.thumbnail} />
+                  <GameImg 
+                    $background={isSanctions ? replacingImages(selectedGame.id).thumbnail : selectedGame.thumbnail}
+                  />
                   <GameInfo>
                     <h3>Информация:</h3>
                     <p><span>Жанр:</span> {selectedGame.genre}</p>
@@ -77,10 +95,13 @@ const GamePage = () => {
                   </GameInfo>
                 </MainInfo>
                 <h2>Скриншоты:</h2>
-                {!!selectedGame.screenshots?.length
-                ? <PhotoCarousel photo={selectedGame.screenshots}/>
+                {/* {!!selectedGame.screenshots?.length
+                ? <PhotoCarousel 
+                    photo={selectedGame.screenshots}
+                  />
                 : <p>Для этой игры скриншоты отсутствуют</p>
-                }
+                } */}
+                {showScreenshots()}
                 <ButtonBack />
               </GameSection>          
             )
