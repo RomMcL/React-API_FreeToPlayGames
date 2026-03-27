@@ -12,7 +12,7 @@ const OPTIONS = {
     },
 };
 
-const myAPI_link = `https://flask-api-sosi-bibu-sanctions.vercel.app/parametrs?`;
+const myAPI_link = `https://flask-api-sosi-bibu-sanctions.vercel.app`;
 const keyMyAPI = 'mneRomaRazreshil';
 
 const sleep = (ms, signal) => {
@@ -40,23 +40,23 @@ const fetchData = async (request, changeableState, isSanctions, attempt=1 ) => {
         if (!isSanctions) {
             response = await fetch(`${BASE_URL}${request}`, {...OPTIONS, signal: getControllerSignal()});
         } else {
-            // Кодируем параметр req
+            // Кодируем параметр request
             const encodedReq = encodeURIComponent(request);
             // Имя клиента для прослойки API
             const client = 'FreeToPlayGames';
             // Формируем URL с параметрами
-            const url = `${myAPI_link}key=${keyMyAPI}&client=${client}&req=${encodedReq}`;
-
+            const url = `${myAPI_link}/parametrs?key=${keyMyAPI}&client=${client}&req=${encodedReq}`;
 
             response = await fetch(url, {method: 'get', mode: 'cors'});
 
-            store.dispatch(changeError({}));
-            
+            store.dispatch(changeError({}));            
         }
 
         if (!response.ok) throw new Error(response.status);
 
         const data = await response.json();
+
+        /* console.log(typeof data) */
 
         if (data['romaSay'] != undefined) {
             store.dispatch(changeError({text: `${data.romaSay} ${data.error}.`, type: 'any'}));

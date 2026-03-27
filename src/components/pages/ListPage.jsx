@@ -95,6 +95,9 @@ const ListPage = () => {
         const lastDataIndex = currentPage * pageSize;
         const firstDataIndex = lastDataIndex - pageSize;
         const paginationData = Object.keys(error).length === 0 && gamesList.slice(firstDataIndex, lastDataIndex);
+
+        /* console.log(typeof gamesList) */
+
         return (
             paginationData?.map(game => (
                 <CardGame key={game.id}
