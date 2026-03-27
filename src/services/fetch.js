@@ -12,7 +12,7 @@ const OPTIONS = {
     },
 };
 
-const myAPI_link = `https://SosiBibuSanction.pythonanywhere.com/parametrs?`;
+const myAPI_link = `https://flask-api-sosi-bibu-sanctions.vercel.app/parametrs?`;
 const keyMyAPI = 'mneRomaRazreshil';
 
 const sleep = (ms, signal) => {
@@ -40,15 +40,17 @@ const fetchData = async (request, changeableState, isSanctions, attempt=1 ) => {
         if (!isSanctions) {
             response = await fetch(`${BASE_URL}${request}`, {...OPTIONS, signal: getControllerSignal()});
         } else {
-            
-            const requestSplit = request.split('&');
-            response = await fetch(`${myAPI_link}key=${keyMyAPI}&req=${requestSplit}`,
-                { 
-                    method: 'get', 
-                    mode: 'cors' 
-                });
+            // Кодируем параметр req
+            const encodedReq = encodeURIComponent(request);
+            // Имя клиента для прослойки API
+            const client = 'FreeToPlayGames';
+            // Формируем URL с параметрами
+            const url = `${myAPI_link}key=${keyMyAPI}&client=${client}&req=${encodedReq}`;
 
-                store.dispatch(changeError({}));
+
+            response = await fetch(url, {method: 'get', mode: 'cors'});
+
+            store.dispatch(changeError({}));
             
         }
 
