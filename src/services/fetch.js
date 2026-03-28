@@ -47,16 +47,7 @@ const fetchData = async (request, changeableState, isSanctions, attempt=1 ) => {
             // Формируем URL с параметрами
             const url = `${myAPI_link}/parametrs?key=${keyMyAPI}&client=${client}&req=${encodedReq}`;
 
-            /* response = await fetch(url, {method: 'get', mode: 'cors'}); */
-
-
-             console.log(url)
-
-            const testUrl = 'https://flask-api-sosi-bibu-sanctions.vercel.app/parametrs?key=mneRomaRazreshil&client=FreeToPlayGames&req=%2Fgames%3Fplatform%3Dall%26sort-by%3Dalphabetical'
-
-            
-            response = await fetch(testUrl, {method: 'get', mode: 'cors'});
-
+            response = await fetch(url, {method: 'get', mode: 'cors'});
 
             store.dispatch(changeError({}));            
         }
