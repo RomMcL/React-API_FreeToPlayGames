@@ -3737,19 +3737,19 @@
         ]
     },
     "306": {
-        "thumbnail": "https://a.fotohosting.pro/2025/08/28/thumbnail.jpg",
+        "thumbnail": "http://a.fotohosting.pro/2025/08/28/thumbnail.jpg",
         "screenshots": [
             {
                 "id": 0,
-                "image": "https://b.fotohosting.pro/2025/08/28/4Story-3.jpg"
+                "image": "http://b.fotohosting.pro/2025/08/28/4Story-3.jpg"
             },
             {
                 "id": 1,
-                "image": "https://a.fotohosting.pro/2025/08/28/4Story-2.jpg"
+                "image": "http://a.fotohosting.pro/2025/08/28/4Story-2.jpg"
             },
             {
                 "id": 2,
-                "image": "https://b.fotohosting.pro/2025/08/28/4Story-1.jpg"
+                "image": "http://b.fotohosting.pro/2025/08/28/4Story-1.jpg"
             }
         ]
     },
