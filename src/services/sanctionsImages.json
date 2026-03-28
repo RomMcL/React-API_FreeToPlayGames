@@ -7270,11 +7270,11 @@
         ]
     },
     "000": {
-        "thumbnail": "React-API_FreeToPlayGames/images/no_img.jpg",
+        "thumbnail": "images/no_img.jpg",
         "screenshots": [
             {
                 "id": 1,
-                "image": "/images/no_img.jpg"
+                "image": "images/no_img.jpg"
             }
         ]
     }
