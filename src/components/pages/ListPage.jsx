@@ -19,11 +19,14 @@ import SwitchSanctions from '../comps/SwitchSanctions';
 
 import fetchData from '../../services/fetch';
 import replacingImages from '../../services/sanctionsImages';
+import imagesJson from '../../services/sanctionsImages.json';
 import createObject from '../../sanctions/createObjectLinks';
 
 import cssMain from '../../styles/views/global/main.css';
 import cssSections from '../../styles/views/local/sections.css';
 import cssCards from '../../styles/views/local/cards.css';
+
+const images = imagesJson;
 
 const { MainContainer } = cssMain;
 const { FilterSection, CardsSection } = cssSections;
@@ -90,24 +93,26 @@ const ListPage = () => {
         }
         return 'var(--color-3)';
     }
+
+    const imagesID = (id) => {
+        if (id in images) return id;
+        else  return "000";
+    }
    
     const renderPaginationData = () => {
         const lastDataIndex = currentPage * pageSize;
         const firstDataIndex = lastDataIndex - pageSize;
         const paginationData = Object.keys(error).length === 0 && gamesList.slice(firstDataIndex, lastDataIndex);
 
-        /* console.log(typeof gamesList) */
-//      https://raw.githubusercontent.com/RomMcL/React-API_FreeToPlayGames/main/sanction-images/306/4Story-1.jpg
         return (
             paginationData?.map(game => (
                 <CardGame key={game.id}
-                //    thumbnail={game.thumbnail}
-                //    thumbnail={isSanctions ? replacingImages(game.id).thumbnail : game.thumbnail}
+        //          thumbnail={game.thumbnail}
+        //          thumbnail={isSanctions ? replacingImages(game.id).thumbnail : game.thumbnail}
 
                     thumbnail={!isSanctions ? game.thumbnail
-                                            : `https://raw.githubusercontent.com/RomMcL/React-API_FreeToPlayGames/main/sanction-images/${game.id}/${replacingImages(game.id).thumbnail}`
+                                            : `https://raw.githubusercontent.com/RomMcL/React-API_FreeToPlayGames/main/sanction-images/${imagesID(game.id)}/${replacingImages(game.id).thumbnail}`
                               }
-
 
                     title={game.title}
                     genre={game.genre}                

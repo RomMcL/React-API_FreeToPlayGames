@@ -14,10 +14,13 @@ import ErrorBlock from '../views/local/ErrorBlock';
 
 import fetchData from '../../services/fetch';
 import replacingImages from '../../services/sanctionsImages';
+import imagesJson from '../../services/sanctionsImages.json';
 
 import cssMain from '../../styles/views/global/main.css';
 import cssSections from '../../styles/views/local/sections.css';
 import cssGame from '../../styles/views/local/game.css';
+
+const images = imagesJson;
 
 const { MainContainer } = cssMain;
 const { GameSection } = cssSections;
@@ -38,18 +41,24 @@ const GamePage = () => {
             JSON.parse(sessionStorage.getItem(`${params.gameID}`))[1] >= new Date().getTime()) {
           dispatch(changeSelectedGame(JSON.parse(sessionStorage.getItem(`${params.gameID}`))[0]));    
         } else fetchData(`/game?id=${params.gameID}`, changeSelectedGame, isSanctions);
-      }, []);
+    }, []);
         
-      useUpdateEffect(() => {
+    useUpdateEffect(() => {
         const timeLimit = ((date = new Date()) => {return date.setMinutes(date.getMinutes() + 5)})();
         const storage = [selectedGame, timeLimit];
         sessionStorage.setItem(`${params.gameID}`, JSON.stringify(storage));
-      }, [selectedGame]);
+    }, [selectedGame]);
+
+
+    const imagesID = (id) => {
+      if (id in images) return id;
+      else  return "000";
+    }
 
     const showScreenshots = () => {
       if (isSanctions) {
 
-        const imgUrl = `https://raw.githubusercontent.com/RomMcL/React-API_FreeToPlayGames/main/sanction-images/${selectedGame.id}/`
+        const imgUrl = `https://raw.githubusercontent.com/RomMcL/React-API_FreeToPlayGames/main/sanction-images/${imagesID(selectedGame.id)}/`
         const santionScreenshots = replacingImages(selectedGame.id).screenshots.map(item => ({
           ...item,
           image: `${imgUrl}${item.image}`
@@ -79,7 +88,7 @@ const GamePage = () => {
                 <MainInfo>
                   <GameImg 
                     $background={!isSanctions ? selectedGame.thumbnail 
-                                              : `https://raw.githubusercontent.com/RomMcL/React-API_FreeToPlayGames/main/sanction-images/${selectedGame.id}/${replacingImages(selectedGame.id).thumbnail}`
+                                              : `https://raw.githubusercontent.com/RomMcL/React-API_FreeToPlayGames/main/sanction-images/${imagesID(selectedGame.id)}/${replacingImages(selectedGame.id).thumbnail}`
                                 }
                   />
                   <GameInfo>
