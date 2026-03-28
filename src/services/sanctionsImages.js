@@ -6,7 +6,7 @@ const images = imagesJson;
 const replacingImages = (id) => {
     if (id in images) {
         return {
-            thumbnail: images[id].thumbnail, 
+            thumbnail: images[id].thumbnail,
             screenshots: images[id].screenshots
         };
     } else {
