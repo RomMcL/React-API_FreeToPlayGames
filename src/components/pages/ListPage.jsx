@@ -97,12 +97,18 @@ const ListPage = () => {
         const paginationData = Object.keys(error).length === 0 && gamesList.slice(firstDataIndex, lastDataIndex);
 
         /* console.log(typeof gamesList) */
-
+//      https://raw.githubusercontent.com/RomMcL/React-API_FreeToPlayGames/main/sanction-images/306/4Story-1.jpg
         return (
             paginationData?.map(game => (
                 <CardGame key={game.id}
                 //    thumbnail={game.thumbnail}
-                    thumbnail={isSanctions ? replacingImages(game.id).thumbnail : game.thumbnail}
+                //    thumbnail={isSanctions ? replacingImages(game.id).thumbnail : game.thumbnail}
+
+                    thumbnail={!isSanctions ? game.thumbnail
+                                            : `https://raw.githubusercontent.com/RomMcL/React-API_FreeToPlayGames/main/sanction-images/${game.id}/${replacingImages(game.id).thumbnail}`
+                              }
+
+
                     title={game.title}
                     genre={game.genre}                
                     publisher={game.publisher}

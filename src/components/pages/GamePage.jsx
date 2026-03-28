@@ -48,9 +48,16 @@ const GamePage = () => {
 
     const showScreenshots = () => {
       if (isSanctions) {
+
+        const imgUrl = `https://raw.githubusercontent.com/RomMcL/React-API_FreeToPlayGames/main/sanction-images/${selectedGame.id}/`
+        const santionScreenshots = replacingImages(selectedGame.id).screenshots.map(item => ({
+          ...item,
+          image: `${imgUrl}${item.image}`
+      }));
+
         return !!replacingImages(selectedGame.id).screenshots?.length 
         ? <PhotoCarousel 
-            photo={isSanctions ? replacingImages(selectedGame.id).screenshots : selectedGame.screenshots}
+            photo={isSanctions ? santionScreenshots : selectedGame.screenshots}
           />
         : <p>Для этой игры скриншоты отсутствуют</p>
          
@@ -71,7 +78,9 @@ const GamePage = () => {
                 <h1>{selectedGame.title}</h1>
                 <MainInfo>
                   <GameImg 
-                    $background={isSanctions ? replacingImages(selectedGame.id).thumbnail : selectedGame.thumbnail}
+                    $background={!isSanctions ? selectedGame.thumbnail 
+                                              : `https://raw.githubusercontent.com/RomMcL/React-API_FreeToPlayGames/main/sanction-images/${selectedGame.id}/${replacingImages(selectedGame.id).thumbnail}`
+                                }
                   />
                   <GameInfo>
                     <h3>Информация:</h3>
